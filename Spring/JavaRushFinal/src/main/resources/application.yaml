@@ -1,0 +1,16 @@
+spring:
+  security:
+    user:
+      name: admin
+      password: admin
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/auto_parts
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+
+  jpa:
+    open-in-view: false
+
+

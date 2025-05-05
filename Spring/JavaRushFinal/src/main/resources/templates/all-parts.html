@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ALL PARTS</title>
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="container mt-4 bg-dark">
+<h3 class="text-center mb-4 text-primary fw-bold" th:text="#{allPart.page.allParts}"></h3>
+
+<a href="?language=ua" class="language-link" th:classappend="${language == 'ua'} ? 'selected'">Українська</a>
+<a href="?language=de" class="language-link" th:classappend="${language == 'de'} ? 'selected'">Deutsch</a>
+<a href="?language=pt" class="language-link" th:classappend="${language == 'pt'} ? 'selected'">Português</a>
+
+
+<div class="d-flex justify-content-end gap-3" th:if="${#authorization.expression('isAuthenticated()') == false}">
+    <a class="btn btn-primary" href="/show-login-page" th:text="#{allPart.page.enter}"></a>
+    <a class="btn btn-success" href="/show-register-page" th:text="#{allPart.page.registration}"></a>
+</div>
+
+<div th:replace="~{fragments/user-logout :: userLogout}"></div>
+
+<div class="row">
+    <div class="d-flex justify-content-center flex-wrap gap-3">
+        <a class="fw-bold" href="/" th:text="#{allPart.page.allMarks}"></a>
+        <a class="fw-bold" th:each="auto:${uniqueAuto}" th:href="@{'/'+ ${auto}}" th:text="${auto}"></a>
+    </div>
+    <br><br>
+
+    <h2 th:if="${selectedBrand}" th:text="'Деталі для ' + ${selectedBrand}"></h2>
+    <div class="row">
+        <div class="col-md-4" th:each="part : ${selectedBrand != null ? filterParts : allPartsList}">
+            <a th:href="@{'/detail-part/' + ${part.id}}" class="text-decoration-none">
+                <div class="card p-3 text-center">
+                    <img th:src="@{'/show-image/' + ${part.id}}" alt="Фото запчастини" class="img-fluid mb-2">
+                    <h5 class="card-title" th:text="#{${part.i18nKey}}"></h5>
+                    <p class="card-text text-muted">
+                        <span th:text="#{allPart.page.price}"></span>: <span th:text="${part.price}"></span>
+                        <span th:text="#{allPart.page.euro}"></span>
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

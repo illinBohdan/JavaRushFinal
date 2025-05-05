@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="userLogout" class="d-flex justify-content-end gap-3" th:if="${#authorization.expression('isAuthenticated()')}">
+    <a class="fw-bold text-primary" th:href="@{'/user/' + ${#authentication.name}}" th:text="${#authentication.name}">Ім'я користувача</a>
+    <form action="/logout" method="POST">
+        <button class="btn btn-danger" type="submit" th:text="#{allPart.page.logout}"></button>
+    </form>
+</div>
+</body>
+</html>
